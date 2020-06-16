@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 '''
-Classes for representing Tables, Rows and TableCells.
+This class renders tables.
 '''
 
 from itertools import chain, zip_longest

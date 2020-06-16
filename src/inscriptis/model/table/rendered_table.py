@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 '''
-Classes for representing Tables, Rows and TableCells.
+This class outputs tables in a structured format.
+- columns are separated by '\n'
+- text within columns is rendered in one line, regardless of line breaks within
+  the text.
 '''
 
 from itertools import chain, zip_longest
@@ -51,7 +54,7 @@ class Row(AbstractRow):
         Returns:
           str -- A rendered string representation of the given row.
         '''
-        row_lines = ['  '.join(line)
+        row_lines = ['\t'.join(line)
                      for line in zip_longest(*[column.get_cell_lines()
                                                for column in self.columns],
                                              fillvalue=' ')]
