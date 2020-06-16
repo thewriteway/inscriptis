@@ -6,32 +6,12 @@ Classes for representing Tables, Rows and TableCells.
 
 from itertools import chain, zip_longest
 from inscriptis.html_properties import HorizontalAlignment
+from inscriptis.model.table import (AbstractTableCell, AbstractRow,
+                                    AbstractTable)
 
 
-class TableCell():
+class TableCell(AbstractTableCell):
     ''' A single table cell '''
-
-    __slots__ = ('canvas', 'align', 'width', 'height')
-
-    def __init__(self, canvas, align, width=None, height=None):
-        '''
-        Args:
-          canvas: canvas to which the table cell is written.
-          align: the :class:`~inscriptis.html_properties.HorizontalAlignment`
-            of the given line.
-         width: line width
-        '''
-        self.canvas = canvas
-        self.align = align
-        self.width = width
-        self.height = height
-
-    def get_format_spec(self):
-        '''
-        The format specification according to the values of `align` and
-        `width`.
-        '''
-        return '{{:{self.align.value}{self.width}}}'.format(self=self)
 
     def get_cell_lines(self):
         '''
@@ -49,12 +29,9 @@ class TableCell():
                 for line in canvas]
 
 
-class Row():
+class Row(AbstractRow):
     ''' A single row within a table '''
     __slot__ = ('columns', )
-
-    def __init__(self):
-        self.columns = []
 
     def get_cell_lines(self, column_idx):
         '''
@@ -81,15 +58,8 @@ class Row():
         return '\n'.join(row_lines)
 
 
-class Table():
+class Table(AbstractTable):
     ''' A HTML table. '''
-
-    __slot__ = ('rows', 'td_is_open')
-
-    def __init__(self):
-        self.rows = []
-        # keep track of whether the last td tag has been closed
-        self.td_is_open = False
 
     def add_row(self):
         '''

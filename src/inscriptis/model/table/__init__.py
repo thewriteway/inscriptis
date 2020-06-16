@@ -37,7 +37,7 @@ class AbstractTableCell():
         Returns:
           list -- A list of all the lines stores within the :class:`TableCell`.
         '''
-        raise NotImplemented
+        raise NotImplementedError
 
 
 class AbstractRow():
@@ -57,17 +57,18 @@ class AbstractRow():
           list -- The list of lines in the cell specified by the column_idx or
                   an empty list if the column does not exist.
         '''
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_text(self):
         '''
         Returns:
           str -- A rendered string representation of the given row.
         '''
-        raise NotImplemented
+        raise NotImplementedError
 
 
 class AbstractTable():
+
     ''' A HTML table. '''
 
     __slot__ = ('rows', 'td_is_open')
@@ -81,21 +82,18 @@ class AbstractTable():
         '''
         Adds an empty :class:`Row` to the table.
         '''
-        self.rows.append(Row())
+        raise NotImplementedError
 
     def add_cell(self, canvas, align=HorizontalAlignment.left):
         '''
         Adds a new :class:`TableCell` to the table's last row. If no row
         exists yet, a new row is created.
         '''
-        if not self.rows:
-            self.add_row()
-        self.rows[-1].columns.append(TableCell(canvas, align))
+        raise NotImplementedError
 
     def get_text(self):
         '''
         Returns:
           A rendered string representation of the given table.
         '''
-        raise NotImplemented
-
+        raise NotImplementedError
