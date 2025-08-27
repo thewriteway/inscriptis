@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-# coding: utf-8
 """Standard CSS profiles shipped with inscriptis.
 
-- `strict`: this profile corresponds to the defaults used by Firefox
-- `relaxed`: this profile is more suited for text analytics, since it ensures
-             that whitespaces are inserted between span and div elements
-             preventing cases where two words stick together.
+CSS profiles are used together with
+:class:`inscriptis.model.config.ParserConfig` to customize
+the HTML to text conversion.
 """
 
 from inscriptis.html_properties import Display, WhiteSpace
 from inscriptis.model.html_element import HtmlElement
 
+#: A CSS profile that corresponds to the defaults used by the Firefox Browser
 STRICT_CSS_PROFILE = {
     "body": HtmlElement(display=Display.inline, whitespace=WhiteSpace.normal),
     "head": HtmlElement(display=Display.none),
@@ -27,12 +26,8 @@ STRICT_CSS_PROFILE = {
     "h4": HtmlElement(display=Display.block, margin_before=1, margin_after=1),
     "h5": HtmlElement(display=Display.block, margin_before=1, margin_after=1),
     "h6": HtmlElement(display=Display.block, margin_before=1, margin_after=1),
-    "ul": HtmlElement(
-        display=Display.block, margin_before=0, margin_after=0, padding_inline=4
-    ),
-    "ol": HtmlElement(
-        display=Display.block, margin_before=0, margin_after=0, padding_inline=4
-    ),
+    "ul": HtmlElement(display=Display.block, margin_before=0, margin_after=0, padding_inline=4),
+    "ol": HtmlElement(display=Display.block, margin_before=0, margin_after=0, padding_inline=4),
     "li": HtmlElement(display=Display.block),
     "address": HtmlElement(display=Display.block),
     "article": HtmlElement(display=Display.block),
@@ -54,11 +49,10 @@ STRICT_CSS_PROFILE = {
     "plaintext": HtmlElement(display=Display.block, whitespace=WhiteSpace.pre),
 }
 
+#: A relaxed CSS profile optimized for content extraction and text analytics.
 RELAXED_CSS_PROFILE = STRICT_CSS_PROFILE.copy()
 RELAXED_CSS_PROFILE["div"] = HtmlElement(display=Display.block, padding_inline=2)
-RELAXED_CSS_PROFILE["span"] = HtmlElement(
-    display=Display.inline, prefix=" ", suffix=" ", limit_whitespace_affixes=True
-)
+RELAXED_CSS_PROFILE["span"] = HtmlElement(display=Display.inline, prefix=" ", suffix=" ", limit_whitespace_affixes=True)
 
 
 CSS_PROFILES = {"strict": STRICT_CSS_PROFILE, "relaxed": RELAXED_CSS_PROFILE}
