@@ -11,9 +11,14 @@ def get_bullet(state: HtmlDocumentState) -> str:
     return UL_COUNTER[len(state.li_counter) % UL_COUNTER_LEN]
 
 
-def li_start_handler(state: HtmlDocumentState, _: dict) -> None:
+def li_start_handler(state: HtmlDocumentState, tag: dict) -> None:
     """Handle the <li> tag."""
     bullet = state.li_counter[-1] if state.li_counter else "* "
+    # Value can only used for numerical bullets.
+    if "value" in tag and tag["value"].isdigit() and isinstance(bullet, int):
+        bullet = int(tag["value"])
+        state.li_counter[-1] = bullet
+
     if isinstance(bullet, int):
         state.li_counter[-1] += 1
         state.tags[-1].list_bullet = f"{bullet}. "
